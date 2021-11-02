@@ -72,3 +72,21 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+.vs/
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+Content/Collections/
+Content/Developers/
+Plugins/*/Binaries/
+Plugins/*/Intermediate/
+WindowsNoEditor/
+MacNoEditor/
+Android_*/
+IOS/
+*.sln
+*.VC.db
+*.xcworkspace

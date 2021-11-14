@@ -22,6 +22,9 @@ private:
 public:
 	template<typename T>
 	bool TryGet(const FName& Key, T& OutData) const;
+
+	template<typename T>
+	void SetValue(const FName& Key, const T& InData);
 };
 
 UCLASS()
@@ -30,13 +33,22 @@ class MOODUTILS_API UMUContainerBPLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 	UFUNCTION(BlueprintCallable)
-	static bool TryGetFloat(const FMUContainer& Container, const FName& Key, float& OutData);
+	static bool MUContainer_TryGetFloat(const FMUContainer& Container, const FName& Key, float& OutData);
 
 	UFUNCTION(BlueprintCallable)
-	static bool TryGetInt64(const FMUContainer& Container, const FName& Key, int64& OutData);
+	static bool MUContainer_TryGetInt64(const FMUContainer& Container, const FName& Key, int64& OutData);
 
 	UFUNCTION(BlueprintCallable)
-	static bool TryGetString(const FMUContainer& Container, const FName& Key, FString& OutData);
+	static bool MUContainer_TryGetString(const FMUContainer& Container, const FName& Key, FString& OutData);
+
+	UFUNCTION(BlueprintCallable)
+	static void MUContainer_SetFloat(FMUContainer& Container, const FName& Key, float InData);
+
+	UFUNCTION(BlueprintCallable)
+	static void MUContainer_SetInt64(FMUContainer& Container, const FName& Key, int64 InData);
+
+	UFUNCTION(BlueprintCallable)
+	static void MUContainer_SetString(FMUContainer& Container, const FName& Key, const FString& InData);
 
 };
 
@@ -56,4 +68,11 @@ bool FMUContainer::TryGet(const FName& Key, T& OutData) const
 
 	OutData = Element.GetSubtype<T>();
 	return true;
+}
+
+template<typename T>
+void FMUContainer::SetValue(const FName& Key, const T& InData)
+{
+	DATA_TYPE& Data = mDataMap.FindOrAdd(Key);
+	Data.SetSubtype<T>(InData);
 }
